@@ -1,0 +1,72 @@
+$isDevices: true;
+ 
+$directions: "top",
+"right",
+"bottom",
+"left";
+ 
+// this spaces is 
+$spaces: 0px, $spacing--xxs,
+$spacing--xs,
+$spacing--s,
+$spacing--m,
+$spacing--l,
+$spacing--xl,
+$spacing--xxl;
+ 
+$devices: $screen-xs,
+$screen-sm,
+$screen-md;
+ 
+ 
+// example: margin-bottom-10px--sm
+ 
+@mixin spacing-utilities($isDevices, $device, $directions, $spaces) {
+  @if($isDevices) {
+    @each $direction in $directions {
+      @each $space in $spaces {
+        @if($device==$screen-xs) {
+          .u-margin-#{$direction}-#{$space}--sm {
+            margin-#{$direction}: #{$space}!important;
+          }
+        }
+ 
+        @else if($device==$screen-sm) {
+          .u-margin-#{$direction}-#{$space}--md {
+            margin-#{$direction}: #{$space}!important;
+          }
+        }
+ 
+        @else if($device==$screen-md) {
+          .u-margin-#{$direction}-#{$space}--lg {
+            margin-#{$direction}: #{$space}!important;
+          }
+        }
+ 
+      }
+    }
+  }
+ 
+  @else {
+    @each $direction in $directions {
+      @each $space in $spaces {
+        .u-margin-#{$direction}-#{$space} {
+          margin-#{$direction}: #{$space}!important;
+        }
+      }
+    }
+  }
+}
+ 
+ 
+@mixin media($devices) {
+  @each $device in $devices {
+    @media (min-width:$device) {
+      @include spacing-utilities($isDevices, $device, $directions, $spaces);
+    }
+  }
+}
+ 
+ 
+ 
+

@@ -1,0 +1,48 @@
+
+/* this structure css is based in ITCSS/BEM */
+
+// Settings
+
+@import './settings/generic_vars.scss';
+@import './settings/size-vars';
+@import './settings/spaces-vars';
+@import './settings/colors-vars';
+@import './settings/font-sizes-vars';
+
+// tools
+
+@import './tools/px-to-rem';
+@import './tools//spaces';
+
+// generics
+
+@import './generics/normalize';
+
+// elements
+
+@import './elements/elements';
+
+// objects
+
+@import './objetcs/grid';
+
+// components
+
+@import './components/text';
+@import './components/header';
+@import './components/button';
+@import './components/textarea';
+@import './components/banner';
+@import './components/card';
+@import './components/modal';
+@import './components/loading';
+@import './components/slide-card';
+
+// utilities
+
+@import './utilities/displays';
+@import './utilities/flex';
+@import './utilities/spaces';
+@import './utilities/backgrounds';
+@import './utilities/colors';
+@import './utilities/texts';

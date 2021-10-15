@@ -1,0 +1,76 @@
+
+
+    // <article class="c-modal c-modal--with-img">
+    //     <div class="c-modal__head">
+    //         <img src="./assets/img/worried.svg" alt="" class="c-modal__icon">
+    //         <p class="c-subtitle c-subtitle--white">Llevas bastantes días negativo</p>
+    //     </div>
+    //     <div class="c-modal__body">
+    //         <p class="c-paragraph">¿Has valorado consultar a un especialista?</p>
+    //         <p class="c-paragraph">No te lo pienses y hazlo, seguro que te viene fenomenal.</p>
+    //         <button class="c-button c-button--primary">Empezar</button>
+    //     </div>
+    // </article>
+
+    .c-modal{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background-color: rgba($grey-dark, .70);
+        position: fixed;
+        inset: 0 0 0 0;
+    }
+
+    .c-modal__content{
+        border-radius: rem(10px);
+        box-shadow: 0px 0px 22px 16px rgba( $grey-dark, .16 );
+        width: calc(100% - 40px);
+        max-width: rem(400px);
+        margin: rem(20px);
+        display: grid;
+        grid-template-rows: auto 1fr;
+        z-index: 100;
+    }
+    
+    .c-modal__head{
+        border-top-left-radius: rem(10px);
+        border-top-right-radius: rem(10px);
+        padding: rem(16px);
+        background-color: $secondary-color;
+        grid-template-columns: 1fr;
+    }
+
+
+
+    .c-modal__icon{
+        width: rem(50px);
+        height: auto;
+    }
+
+    .c-modal__body{
+        background-color: $white;
+        padding: rem(16px);
+        border-bottom-left-radius: rem(10px);
+        border-bottom-right-radius: rem(10px);
+        overflow: scroll;
+        max-height: 80vh;
+    }
+
+    // MODIFIERS
+
+    .c-modal--with-img{
+        .c-modal__head{
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            column-gap: rem(16px);
+        }
+    }
+
+    .c-modal--lg{
+        .c-modal__content{
+            max-width: rem(600px);
+        }
+    }
+

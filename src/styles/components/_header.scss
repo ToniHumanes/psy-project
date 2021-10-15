@@ -1,0 +1,50 @@
+
+
+// Template
+
+// <header class="c-header c-header--bg">
+//     <section class="container">
+//         <div class="row">
+//             <div class="col-12">
+//                 <h1 class="c-title">¿Cómo te sientes hoy?</h1>
+//                 <span class="c-title">😄😡🥰🤪</span>
+//             </div>
+//         </div>
+//     </section>
+// </header>
+
+.c-header{
+    display: flex;
+    justify-content: end;
+    justify-content: center;
+    padding: rem(20px);
+    position: relative;
+    z-index: 0;
+
+    &--bg{
+        background-color: $secondary-color;
+
+        &::before{
+            content: "";
+            width: 90%;
+            height: 100%;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background-color: $primary-color;
+            border-top-right-radius: rem(146px);
+            border-top-left-radius: rem(146px);
+            border-bottom-right-radius: rem(146px);
+            border-bottom-left-radius: rem(0px);
+            z-index: -1;
+
+        }
+    }
+}
+.c-header__rrss{
+    display: grid;
+    grid-template-rows: 40px;
+    grid-template-columns: auto;
+}

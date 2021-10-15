@@ -1,0 +1,38 @@
+
+
+
+// <article class="c-banner c-banner-bg-red">
+//     <p class="c-paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magni temporibus numquam odio, itaque omnis harum a praesentium placeat illum nobis autem, corporis dicta, vel laboriosam accusantium in maiores quasi dignissimos?</p>
+//     <button class="c-button c-button--error-secondary">Empezar</button>
+// </article>
+
+.c-banner{
+
+    &--no-padding{
+        padding: rem(0px);
+    }
+
+    &-bg-red{
+        background-color: $error-primary-color;
+    }
+
+    &-bg-green{
+        background-color: $secondary-color;
+    }
+}
+
+.c-banner__layout{
+
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: rem(16px);
+    align-items: center;
+    justify-content: space-between;
+    padding: rem(15px) rem(20px) rem(15px);
+
+    @media (min-width: $screen-xs){
+        grid-template-columns: 1fr auto;
+        column-gap: rem(20px);
+        row-gap: auto;
+    }
+}

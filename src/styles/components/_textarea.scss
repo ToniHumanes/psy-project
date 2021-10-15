@@ -1,0 +1,22 @@
+
+
+
+.c-textarea{
+    border-radius: rem(10px);
+    color: $primary-color;
+    font-size: rem($size--s);
+    border: 2px solid $primary-color;
+    padding: rem(18px);
+    width: 100%;
+    resize: none;
+
+    &::placeholder{
+        font-size: rem($size--s);
+        color: $primary-color;
+    }
+
+    &:focus, &:focus-visible , &:active{
+        border: 2px solid $secondary-color;
+        outline: none;
+    } 
+}

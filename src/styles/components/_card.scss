@@ -1,0 +1,32 @@
+
+
+.c-card{
+    border-radius: rem(10px);
+    background-color: $primary-color;
+    padding: rem(24px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.c-card__textarea{
+
+    width: 100%;
+    height: auto;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: rem($size--s);
+    color: $white;
+    resize: none;
+
+    &::placeholder{
+        font-size: rem($size--s);
+        color: $white;
+    }
+
+    &:focus, &:focus-visible , &:active{
+        border: none;
+        outline: none;
+    } 
+}

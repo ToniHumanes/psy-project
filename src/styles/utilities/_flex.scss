@@ -1,0 +1,39 @@
+
+
+.u-flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.u-flex{
+    display: flex!important;
+}
+
+.u-flex-wrap{
+    flex-wrap: wrap!important;
+}
+
+.u-flex-justify{
+    &--center{
+        justify-content: center!important;
+    }
+    &--start{
+        justify-content: start!important;
+    }
+    &--end{
+        justify-content: end!important;
+    }
+}
+
+.u-flex-align{
+    &--center{
+        align-items: center!important;
+    }
+    &--start{
+        align-items: start!important;
+    }
+    &--end{
+        align-items: end!important;
+    }
+}

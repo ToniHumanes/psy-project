@@ -1,0 +1,42 @@
+.c-button {
+    font-size: rem($size--s);
+    font-family: 'Lato';
+    font-weight: 700;
+    color: $white;
+    line-height: 1;
+    padding: rem(15px) rem(13px) rem(15px);
+    border-radius: rem(30px);
+    border: none;
+}
+
+.c-button--primary {
+    background: $primary-color;
+}
+
+.c-button--secondary {
+    border: 2px solid $primary-color;
+    color: $primary-color;
+    background-color: transparent;
+}
+
+.c-button--error {
+    background: $error-secondary-color;
+}
+
+.c-button--error-secondary {
+    border: 2px solid $error-secondary-color;
+    color: $error-secondary-color;
+    background-color: transparent;
+}
+
+.c-button--icon {
+    column-gap: rem(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &>img{
+        max-width: rem(20px);
+        height: auto;
+    }
+}

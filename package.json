@@ -1,0 +1,38 @@
+{
+  "name": "phyco-project",
+  "version": "1.0.0",
+  "description": "* El proyecto se compila con webpack y se deberán seguir los siguientes pasos para su correcta instalación:",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "rxjs": "^7.3.0",
+    "typescript": "^4.4.3"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.3.0",
+    "cssnano": "^5.0.8",
+    "file-loader": "^6.2.0",
+    "html-loader": "^2.1.2",
+    "html-webpack-plugin": "^5.3.2",
+    "http-server": "^13.0.2",
+    "mini-css-extract-plugin": "^2.3.0",
+    "node-sass": "^6.0.1",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "postcss-loader": "^6.1.1",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1",
+    "terser-webpack-plugin": "^5.2.4",
+    "ts-loader": "^9.2.6",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development --open --port=8081",
+    "build": "webpack --config webpack.config.js --mode='development'"
+  },
+  "author": "",
+  "license": "ISC"
+}

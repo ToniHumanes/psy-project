@@ -1,0 +1,47 @@
+
+
+.c-title{
+
+    font-size: rem($size--l);
+    color: $grey-dark;
+    line-height: 1;
+    
+    &--white{
+       color: $white; 
+    }
+
+    @media (min-width: $screen-sm) {
+        font-size: rem($size--xl); 
+    }
+}
+
+.c-subtitle{
+
+    font-size: rem($size--m);
+    color: $grey-dark;
+    line-height: 1;
+    
+    &--white{
+       color: $white; 
+    }
+
+    @media (min-width: $screen-sm) {
+        font-size: rem($size--m); 
+    }
+}
+
+.c-paragraph{
+
+    font-size: rem($size--s);
+    color: $grey-dark;
+    line-height: 1;
+    
+    &--white{
+       color: $white; 
+    }
+}
+
+.c-text--error{
+    font-size: rem($size--xs);
+    color: $error-primary-color;
+}

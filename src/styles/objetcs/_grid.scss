@@ -1,0 +1,65 @@
+
+
+
+@import '../tools/mixins';
+
+
+
+.container {
+    max-width: $container-max-width;
+    margin: 0 auto;
+}
+
+.container--padding{
+    padding-left: rem(20px);
+    padding-right: rem(20px);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row.no-gutter [class*=col] {
+    padding: 0;
+}
+
+[class*=col].no-gutter {
+    padding: 0;
+}
+
+[class*=col] {
+    padding-left: ($gutter / 2);
+    padding-right: ($gutter / 2);
+}
+
+.col {
+    flex-shrink: 1;
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+
+/**
+* SMALL (SM), MEDIUM (MD), LARGE (LG)
+*/
+
+
+@include gridGenerator($breakpoint: null, $offset: true);
+
+
+@include xs {
+    @include gridGenerator($breakpoint: 'xs', $offset: true);
+}
+
+@include sm {
+    @include gridGenerator($breakpoint: 'sm', $offset: true);
+}
+
+@include md {
+    @include gridGenerator($breakpoint: 'md', $offset: true);
+}
+
+@include lg {
+    @include gridGenerator($breakpoint: 'lg', $offset: true);
+}
