@@ -4,7 +4,8 @@ import { SentimentRecognition } from './sentiment.service';
 import { Modal } from './modal';
 import { Card } from './card';
 import { ValidateForm } from './validate-form';
-import { exhaustMap, from, fromEvent, map, mapTo, mergeAll, mergeMap, pluck, takeWhile, tap } from 'rxjs';
+import { from, fromEvent, map, pluck, takeWhile, tap } from 'rxjs';
+import { exhaustMap } from 'rxjs/operators';
 
 class initApp {
 
@@ -54,39 +55,41 @@ class initApp {
     getValuesForm(e) {
         const formElement = e.form;
         const isValid = this.validateForm.isRequireds(formElement);
-        let valuesFormItem = {};
+        let valuesFormItem = [];
         if (!!isValid) {
             const elementsForm = this.validateForm.getElementsForm(formElement);
             valuesFormItem = this.validateForm.getValuesElementsForm(elementsForm);
         }
 
-        return valuesFormItem;
+        return from(valuesFormItem);
     }
 
-    sendForm(e){
-        const valuesForm = this.getValuesForm(e);
-        const values$ = from([valuesForm]).pipe(
-            map( x => {text: x[0]})
-        );
-        return values$;
+    sendForm(target){
+        return this.getValuesForm(target)
+        .pipe(
+            takeWhile( (data:any) => data.length > 0),
+            map<any, any>( (data:any) => (
+                {text: data}
+            )),
+            exhaustMap<any,any>( (dataObject: any) => this.sentimentService.postDataSentiment(dataObject))
+        )
     }
 
     createEventForm() {
         // ------ Events obs$ ---------
         this.sendFormClick$ = fromEvent<MouseEvent>(document.querySelector('[js-send-form]'), 'click');
         this.sendFormClick$.pipe(
-            tap( (ev: any) => ev.preventDefault()),
+            tap((ev: any) => ev.preventDefault()),
             pluck<any, any>('target'),
-            takeWhile( (target:any) => target.getAttributeNames().includes('js-send-form')),
-            exhaustMap( (target:any) => this.sendForm(target) ),
-            mergeMap( values => this.sentimentService.postDataSentiment(values))
+            takeWhile((target: any) => target.getAttributeNames().includes('js-send-form')),
+            exhaustMap<any,any>( (target: any) => this.sendForm(target))
         )
-            .subscribe((values) => {
-               console.log(values);
+            .subscribe((dataObject) => {
+                console.log('no se que saldrá', dataObject);
             });
     }
 
-    valideForm(e) {
+    validateFormReactive(e) {
         if (e.target.type === 'textarea' || e.target.type === 'input' || e.target.type === 'select') {
             const formElement = e.target.closest('#formEmotion');
             this.validateForm.isRequireds(formElement);
@@ -116,11 +119,11 @@ const appControlModule = new initApp(new SentimentRecognition, new Modal, new Ca
             typeEvent: 'click'
         },
         {
-            method: appControlModule.valideForm,
+            method: appControlModule.validateFormReactive,
             typeEvent: 'focusout'
         },
         {
-            method: appControlModule.valideForm,
+            method: appControlModule.validateFormReactive,
             typeEvent: 'keyup'
         }
     ];
