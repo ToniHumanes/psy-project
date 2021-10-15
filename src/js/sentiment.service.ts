@@ -25,8 +25,7 @@ export class SentimentRecognition {
             body: jsonSend
         }).pipe(
             pluck('response'),
-            catchError( this.controlError ),
-            exhaustMap(this.sentiment$)
+            catchError( this.controlError )
         );
 
         return this.sentiment$;
