@@ -1,18 +1,20 @@
 
 import '../styles/styles.scss';
-import { SentimentRecognition } from './sentiment.service';
-import { Modal } from './modal';
-import { Card } from './card';
-import { ValidateForm } from './validate-form';
 import { from, fromEvent, map, Observable, pluck, takeWhile, tap } from 'rxjs';
 import { exhaustMap } from 'rxjs/operators';
+import { Modal } from './modal';
+import { Card } from './card';
 import { Alert } from './alert';
+import { Loading } from './loading';
+import { ValidateForm } from './validate-form';
+import { SentimentRecognition } from './sentiment.service';
 
 class initApp {
 
     _modal: Modal;
     _card: Card;
     _alert: Alert;
+    _loading: Loading;
     validateForm: ValidateForm;
     sentimentService: SentimentRecognition;
     sendFormClick$: any;
@@ -22,11 +24,13 @@ class initApp {
         modal: Modal,
         card: Card,
         alert: Alert,
+        loading: Loading,
         validateForm: ValidateForm
     ) {
         this._modal = modal;
         this._card = card;
         this._alert = alert;
+        this._loading = loading;
         this.validateForm = validateForm;
         this.sentimentService = sentimentService;
         this.createEventForm();
@@ -82,6 +86,7 @@ class initApp {
                 map<Array<NodeList>, object>((data: Array<NodeList>) => (
                     { text: data }
                 )),
+                tap(() => Loading.prototype.open()),
                 exhaustMap<object, Observable<any>>((dataObject: object) => this.sentimentService.postDataSentiment(dataObject))
             )
     }
@@ -93,11 +98,11 @@ class initApp {
             tap((ev: Event) => ev.preventDefault()),
             pluck('target'),
             takeWhile((target: any) => target.getAttributeNames().includes('js-send-form')),
-            // tap para componente loading
             exhaustMap<any, any>((target: any) => this.sendForm(target))
         )
             .subscribe((dataObject: any) => {
                 console.log('no se que saldrá', dataObject);
+                this._loading.close();
                 this._alert.open('alertSuccessServiceSentiment');
             });
     }
@@ -112,7 +117,7 @@ class initApp {
 
 // -------- Instance app Module load resourses ----------
 
-const appControlModule = new initApp(new SentimentRecognition, new Modal, new Card, new Alert, new ValidateForm);
+const appControlModule = new initApp(new SentimentRecognition, new Modal, new Card, new Alert, new Loading,  new ValidateForm);
 
 ((appControlModule) => {
 

@@ -1,14 +1,13 @@
 
 import { Alert } from "./alert";
 
-export class Card extends Alert{
+export class Card{
 
     templateCard: string;
     alert: Alert;
 
     constructor(
     ) {
-        super();
         this.alert = Alert.prototype;
         this.templateCard = this.createTemplateComponent();
     }

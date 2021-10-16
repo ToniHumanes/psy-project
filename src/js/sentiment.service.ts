@@ -1,11 +1,16 @@
 
 import { catchError, of, pluck } from "rxjs";
 import { ajax, AjaxResponse } from "rxjs/ajax";
+import { Loading } from "./loading";
 
 
-export class SentimentRecognition {
+export class SentimentRecognition{
 
-    constructor() {}
+    loading: Loading;
+
+    constructor() {
+        this.loading = Loading.prototype;
+    }
 
     postDataSentiment(objectData){
 
@@ -25,7 +30,7 @@ export class SentimentRecognition {
     }
 
     controlError(err){
-        alert(err);
+        this.loading.close();
         return of([]);
     }
 
