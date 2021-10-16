@@ -4,13 +4,15 @@ import { SentimentRecognition } from './sentiment.service';
 import { Modal } from './modal';
 import { Card } from './card';
 import { ValidateForm } from './validate-form';
-import { from, fromEvent, map, pluck, takeWhile, tap } from 'rxjs';
+import { from, fromEvent, map, Observable, pluck, takeWhile, tap } from 'rxjs';
 import { exhaustMap } from 'rxjs/operators';
+import { Alert } from './alert';
 
 class initApp {
 
     _modal: Modal;
     _card: Card;
+    _alert: Alert;
     validateForm: ValidateForm;
     sentimentService: SentimentRecognition;
     sendFormClick$: any;
@@ -19,10 +21,12 @@ class initApp {
         sentimentService: SentimentRecognition,
         modal: Modal,
         card: Card,
+        alert: Alert,
         validateForm: ValidateForm
     ) {
         this._modal = modal;
         this._card = card;
+        this._alert = alert;
         this.validateForm = validateForm;
         this.sentimentService = sentimentService;
         this.createEventForm();
@@ -52,6 +56,13 @@ class initApp {
         }
     }
 
+
+    closeAlert(e){
+        if (!!e.target.attributes['js-close-alert']) {
+            this._alert.close(e);
+        }
+    }
+
     getValuesForm(e) {
         const formElement = e.form;
         const isValid = this.validateForm.isRequireds(formElement);
@@ -64,34 +75,36 @@ class initApp {
         return from(valuesFormItem);
     }
 
-    sendForm(target){
+    sendForm(target: EventTarget) {
         return this.getValuesForm(target)
-        .pipe(
-            takeWhile( (data:any) => data.length > 0),
-            map<any, any>( (data:any) => (
-                {text: data}
-            )),
-            exhaustMap<any,any>( (dataObject: any) => this.sentimentService.postDataSentiment(dataObject))
-        )
+            .pipe(
+                takeWhile((data: Array<NodeList>) => data.length > 0),
+                map<Array<NodeList>, object>((data: Array<NodeList>) => (
+                    { text: data }
+                )),
+                exhaustMap<object, Observable<any>>((dataObject: object) => this.sentimentService.postDataSentiment(dataObject))
+            )
     }
 
     createEventForm() {
         // ------ Events obs$ ---------
         this.sendFormClick$ = fromEvent<MouseEvent>(document.querySelector('[js-send-form]'), 'click');
         this.sendFormClick$.pipe(
-            tap((ev: any) => ev.preventDefault()),
-            pluck<any, any>('target'),
+            tap((ev: Event) => ev.preventDefault()),
+            pluck('target'),
             takeWhile((target: any) => target.getAttributeNames().includes('js-send-form')),
-            exhaustMap<any,any>( (target: any) => this.sendForm(target))
+            // tap para componente loading
+            exhaustMap<any, any>((target: any) => this.sendForm(target))
         )
-            .subscribe((dataObject) => {
+            .subscribe((dataObject: any) => {
                 console.log('no se que saldrá', dataObject);
+                this._alert.open('alertSuccessServiceSentiment');
             });
     }
 
     validateFormReactive(e) {
-        if (e.target.type === 'textarea' || e.target.type === 'input' || e.target.type === 'select') {
-            const formElement = e.target.closest('#formEmotion');
+        const formElement = e.target.closest('#formEmotion');
+        if ( (e.target.type === 'textarea' || e.target.type === 'input' || e.target.type === 'select') && !!formElement) {
             this.validateForm.isRequireds(formElement);
         }
     }
@@ -99,7 +112,7 @@ class initApp {
 
 // -------- Instance app Module load resourses ----------
 
-const appControlModule = new initApp(new SentimentRecognition, new Modal, new Card, new ValidateForm);
+const appControlModule = new initApp(new SentimentRecognition, new Modal, new Card, new Alert, new ValidateForm);
 
 ((appControlModule) => {
 
@@ -119,8 +132,8 @@ const appControlModule = new initApp(new SentimentRecognition, new Modal, new Ca
             typeEvent: 'click'
         },
         {
-            method: appControlModule.validateFormReactive,
-            typeEvent: 'focusout'
+            method: appControlModule.closeAlert,
+            typeEvent: 'click'
         },
         {
             method: appControlModule.validateFormReactive,
@@ -137,19 +150,10 @@ const appControlModule = new initApp(new SentimentRecognition, new Modal, new Ca
 
 })(appControlModule);
 
-(() => {
-
-})();
-
-
-
-
-
-
 // tests cases
 
 /**
- * No dejar crear más de 6 Cards
+ * No dejar crear más de 3 Cards
  * Crear componente alerta
  * animación de las alertas
  * Si el servicio es ok, avisar con una alerta de las de abajo
@@ -158,9 +162,3 @@ const appControlModule = new initApp(new SentimentRecognition, new Modal, new Ca
  * Texto: "i am Toni, i am very happy, because have a vr glass"
  * Programar el tema de que si llevas muchos días triste te saque modal
  */
-
-
-//  map(values => ({
-//     text: values[0]
-// })),
-// exhaustMap(objectValue => appControlModule.sentimentService.postDataSentiment(objectValue))

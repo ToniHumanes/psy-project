@@ -7,6 +7,12 @@
 // </article>
 
 .c-banner{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translate(0px, 100%);
+    opacity: 0;
 
     &--no-padding{
         padding: rem(0px);
@@ -17,7 +23,7 @@
     }
 
     &-bg-green{
-        background-color: $secondary-color;
+        background-color: $primary-color;
     }
 }
 
@@ -33,6 +39,6 @@
     @media (min-width: $screen-xs){
         grid-template-columns: 1fr auto;
         column-gap: rem(20px);
-        row-gap: auto;
+        row-gap: normal;
     }
 }

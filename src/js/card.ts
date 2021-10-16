@@ -1,10 +1,15 @@
 
+import { Alert } from "./alert";
 
-export class Card {
+export class Card extends Alert{
 
     templateCard: string;
+    alert: Alert;
 
-    constructor() {
+    constructor(
+    ) {
+        super();
+        this.alert = Alert.prototype;
         this.templateCard = this.createTemplateComponent();
     }
 
@@ -17,16 +22,20 @@ export class Card {
     }
 
     addCard(target) {
-        if(!!target.nextElementSibling.attributes['js-slide-card']){
+        const elementTarget = target.nextElementSibling;
+        if(!!elementTarget.attributes['js-slide-card'] && elementTarget.querySelectorAll('[js-slider-card__item]').length < 3 && elementTarget.querySelectorAll('[js-slider-card__item]').length > 0){
             const elementSlideCard = document.createElement('div');
             elementSlideCard.className = "c-slider-card__item";
+            elementSlideCard.setAttribute("js-slider-card__item", "");
             elementSlideCard.innerHTML = this.templateCard;
             target.nextElementSibling.append(elementSlideCard);
+        }else{
+            this.alert.open('alertErrorLimitCards');
         }
     }
 
     removeCard() {
-
+        // obs$
     }
 
 }

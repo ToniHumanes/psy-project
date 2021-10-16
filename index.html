@@ -82,12 +82,12 @@
                     segundos de que termines de escribir se esfumaran, así que tus secretos están a salvo conmigo.</p>
 
 
-                <a href="#" class="u-block u-margin-bottom-10px" js-add-card>
+                <a href="#" class="u-inline-block u-margin-bottom-10px" js-add-card>
                     <img src="./assets/img/add.svg" alt="">
                 </a>
 
                 <section class="c-slider-card" js-slide-card>
-                    <div class="c-slider-card__item">
+                    <div class="c-slider-card__item" js-slider-card__item="">
                         <article class="c-card">
                             <textarea name="" id="" cols="30" rows="10" class="c-card__textarea"
                                 placeholder="Escribe aquí..."></textarea>
@@ -101,23 +101,20 @@
 
     </main>
 
-    <article class="c-banner c-banner-bg-green">
+    <article class="c-banner c-banner-bg-green" js-alert="" id="alertSuccessServiceSentiment">
         <div class="container">
             <div class="c-banner__layout">
-                <p class="c-paragraph c-paragraph--white">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Magni temporibus numquam odio, itaque omnis harum a praesentium placeat illum nobis autem.</p>
-                <button class="c-button c-button--primary">Empezar</button>
-
+                <p class="c-paragraph c-paragraph--white">¡Tu frase se ha analizado con exito!</p>
+                <button class="c-button c-button--secondary" js-close-alert="">seguir</button>
             </div>
         </div>
     </article>
 
-    <article class="c-banner c-banner-bg-red">
+    <article class="c-banner c-banner-bg-red" js-alert="" id="alertErrorLimitCards">
         <div class="container">
             <div class="c-banner__layout">
-                <p class="c-paragraph c-paragraph--white">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Magni temporibus numquam odio, itaque omnis harum a praesentium placeat illum nobis autem.</p>
-                <button class="c-button c-button--error">Empezar</button>
+                <p class="c-paragraph c-paragraph--white">No puedes crear más de 3 tarjetas</p>
+                <button class="c-button c-button--error" js-close-alert="">cerrar</button>
             </div>
         </div>
     </article>
@@ -127,13 +124,13 @@
         <article class="c-modal__content">
             <div class="c-modal__head">
                 <img src="./assets/img/worried.svg" alt="" class="c-modal__icon">
-                <p class="c-subtitle c-subtitle--white">Llevas bastantes días negativo</p>
+                <p class="c-subtitle c-subtitle--white">Estas bastante negativo</p>
             </div>
             <div class="c-modal__body">
                 <p class="c-paragraph u-margin-bottom-20px">¿Has valorado consultar a un especialista?</p>
                 <p class="c-paragraph u-margin-bottom-20px">No te lo pienses y hazlo, seguro que te viene fenomenal.</p>
                 <div class="u-flex-center">
-                    <button class="c-button c-button--primary" js-close-modal="true">Empezar</button>
+                    <button class="c-button c-button--primary" js-close-modal="true">continuar</button>
                 </div>
             </div>
         </article>

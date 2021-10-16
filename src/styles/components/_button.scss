@@ -7,6 +7,7 @@
     padding: rem(15px) rem(13px) rem(15px);
     border-radius: rem(30px);
     border: none;
+    cursor: pointer;
 }
 
 .c-button--primary {
@@ -16,7 +17,7 @@
 .c-button--secondary {
     border: 2px solid $primary-color;
     color: $primary-color;
-    background-color: transparent;
+    background-color: $white;
 }
 
 .c-button--error {
@@ -26,7 +27,7 @@
 .c-button--error-secondary {
     border: 2px solid $error-secondary-color;
     color: $error-secondary-color;
-    background-color: transparent;
+    background-color: $white;
 }
 
 .c-button--icon {
