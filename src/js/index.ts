@@ -34,6 +34,7 @@ class initApp {
         this.validateForm = validateForm;
         this.sentimentService = sentimentService;
         this.createEventForm();
+        this._card.removeCardEvent();
     }
 
 
@@ -101,9 +102,11 @@ class initApp {
             exhaustMap<any, any>((target: any) => this.sendForm(target))
         )
             .subscribe((dataObject: any) => {
+                if(!!dataObject.result){
+                    this._alert.open('alertSuccessServiceSentiment');
+                }
                 console.log('no se que saldrá', dataObject);
                 this._loading.close();
-                this._alert.open('alertSuccessServiceSentiment');
             });
     }
 
@@ -158,10 +161,6 @@ const appControlModule = new initApp(new SentimentRecognition, new Modal, new Ca
 // tests cases
 
 /**
- * No dejar crear más de 3 Cards
- * Crear componente alerta
- * animación de las alertas
- * Si el servicio es ok, avisar con una alerta de las de abajo
  * Si el servicio no es ok, avisar con una alerta de las de abajo
  * Cambiar la vista y sacar textos dependiendo de "polarity" y "type"
  * Texto: "i am Toni, i am very happy, because have a vr glass"

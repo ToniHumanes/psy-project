@@ -2,14 +2,11 @@
 
 export class Modal{
 
-    constructor(){
-        console.log(this);
-    }
+    constructor(){}
 
     open(idModal: string){
         this.close();
         document.querySelector(`#${idModal}`).classList.remove('u-hidden');
-
     }
 
     close(){

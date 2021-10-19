@@ -15,7 +15,7 @@
 
 <body>
 
-    <header class="c-header c-header--bg u-margin-bottom-20px">
+    <header class="c-header c-header--bg u-margin-bottom-20px u-margin-bottom-50px--sm">
         <section class="container">
             <div class="row">
                 <div class="col-12">
@@ -36,35 +36,18 @@
 
     <main class="container container--padding">
 
-        <div class="row u-margin-bottom-50px u-flex-align--end">
+        <div class="row u-margin-bottom-30px">
             <div class="col-12 col-sm-6">
                 <p class="c-paragraph u-margin-bottom-20px">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Curabitur urna mi,
                     tempus ut urna nec, pharetra molestie risus.</p>
             </div>
-            <div class="col-12 col-sm-6 u-flex u-flex-justify--end">
-                <button class="c-button c-button--primary c-button--icon" js-open-modal="modalExample">Empezar
-                    <img src="./assets/img/next.svg" alt="">
-                </button>
-            </div>
-
-            <!-- 
-                <button class="c-button c-button--primary">Empezar</button>
-                <button class="c-button c-button--secondary">Empezar</button>
-                <button class="c-button c-button--error">Empezar</button>
-                <button class="c-button c-button--error-secondary">Empezar</button> 
-                -->
-
-        </div>
-
-
-        <div class="row u-margin-bottom-30px">
-            <form action="" id="formEmotion">
-                <div class="col-12 u-margin-bottom-10px" js-form-group>
-                    <textarea name="textarea" class="c-textarea" id="textarea" cols="30" rows="10"
+            <form class="col-12 col-sm-6" action="" id="formEmotion">
+                <div class="u-margin-bottom-10px" js-form-group>
+                    <textarea name="textarea" class="c-textarea" id="textarea" rows="10"
                         placeholder="Escribe aquí..." required></textarea>
                 </div>
-                <div class="col-12 u-flex u-flex-justify--end">
+                <div class="u-flex u-flex-justify--end">
                     <button class="c-button c-button--primary c-button--icon" js-send-form>Enviar
                         <img src="./assets/img/next.svg" alt="">
                     </button>
@@ -89,7 +72,7 @@
                 <section class="c-slider-card" js-slide-card>
                     <div class="c-slider-card__item" js-slider-card__item="">
                         <article class="c-card">
-                            <textarea name="" id="" cols="30" rows="10" class="c-card__textarea"
+                            <textarea name="" id="" rows="10" class="c-card__textarea"
                                 placeholder="Escribe aquí..."></textarea>
                         </article>
                     </div>
@@ -119,6 +102,14 @@
         </div>
     </article>
 
+    <article class="c-banner c-banner-bg-red" js-alert="" id="alertErrorServiceSentiment">
+        <div class="container">
+            <div class="c-banner__layout">
+                <p class="c-paragraph c-paragraph--white">Ha ocurrido un error inesperado</p>
+                <button class="c-button c-button--error" js-close-alert="">cerrar</button>
+            </div>
+        </div>
+    </article>
 
     <div class="c-modal c-modal--with-img u-hidden" id="modalExample" modalElement>
         <article class="c-modal__content">

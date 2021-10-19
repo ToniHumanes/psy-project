@@ -2,14 +2,17 @@
 import { catchError, of, pluck } from "rxjs";
 import { ajax, AjaxResponse } from "rxjs/ajax";
 import { Loading } from "./loading";
+import { Alert } from "./alert";
 
 
 export class SentimentRecognition{
 
     loading: Loading;
+    alert: Alert;
 
     constructor() {
         this.loading = Loading.prototype;
+        this.alert = Alert.prototype;
     }
 
     postDataSentiment(objectData){
@@ -25,12 +28,13 @@ export class SentimentRecognition{
             body: jsonSend
         }).pipe(
             pluck('response'),
-            catchError( this.controlError )
+            catchError( this.controlError.bind(this) )
         );
     }
 
-    controlError(err){
+    controlError(){
         this.loading.close();
+        this.alert.open('alertErrorServiceSentiment');
         return of([]);
     }
 
