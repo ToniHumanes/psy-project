@@ -9,6 +9,14 @@ import { Loading } from './loading';
 import { ValidateForm } from './validate-form';
 import { SentimentRecognition } from './sentiment.service';
 
+
+interface sentimentResult {
+    result: {
+        type: string;
+        polarity: number;
+    }
+}
+
 class initApp {
 
     _modal: Modal;
@@ -37,6 +45,9 @@ class initApp {
         this._card.removeCardEvent();
     }
 
+    // open modal with event click
+    // <button js-open-modal="modalExample">open</button>
+    // "modalExample" is the modal id
 
     openModalExample(e) {
         e.preventDefault();
@@ -62,7 +73,7 @@ class initApp {
     }
 
 
-    closeAlert(e){
+    closeAlert(e) {
         if (!!e.target.attributes['js-close-alert']) {
             this._alert.close(e);
         }
@@ -102,25 +113,42 @@ class initApp {
             exhaustMap<any, any>((target: any) => this.sendForm(target))
         )
             .subscribe((dataObject: any) => {
-                if(!!dataObject.result){
+                if (!!dataObject.result) {
                     this._alert.open('alertSuccessServiceSentiment');
                 }
                 console.log('no se que saldrá', dataObject);
+                this.showAdviceInformation(dataObject);
                 this._loading.close();
             });
     }
 
     validateFormReactive(e) {
         const formElement = e.target.closest('#formEmotion');
-        if ( (e.target.type === 'textarea' || e.target.type === 'input' || e.target.type === 'select') && !!formElement) {
+        if ((e.target.type === 'textarea' || e.target.type === 'input' || e.target.type === 'select') && !!formElement) {
             this.validateForm.isRequireds(formElement);
+        }
+    }
+
+    showViewText() {
+
+    }
+
+    showAdviceInformation(dataObject: sentimentResult) {
+        if (dataObject.result.type === 'negative' && dataObject.result.polarity <= -0.5) {
+            const sentimentNegative = sessionStorage.sentimentNegative;
+
+            !!sentimentNegative ? sessionStorage.setItem('sentimentNegative', (Number(sentimentNegative) + 1).toString()) : sessionStorage.setItem('sentimentNegative', '1');
+
+            if (sentimentNegative > 6) {
+                this._modal.open("modalSentimentNegative");
+            }
         }
     }
 }
 
 // -------- Instance app Module load resourses ----------
 
-const appControlModule = new initApp(new SentimentRecognition, new Modal, new Card, new Alert, new Loading,  new ValidateForm);
+const appControlModule = new initApp(new SentimentRecognition, new Modal, new Card, new Alert, new Loading, new ValidateForm);
 
 ((appControlModule) => {
 
@@ -161,8 +189,6 @@ const appControlModule = new initApp(new SentimentRecognition, new Modal, new Ca
 // tests cases
 
 /**
- * Si el servicio no es ok, avisar con una alerta de las de abajo
  * Cambiar la vista y sacar textos dependiendo de "polarity" y "type"
  * Texto: "i am Toni, i am very happy, because have a vr glass"
- * Programar el tema de que si llevas muchos días triste te saque modal
  */

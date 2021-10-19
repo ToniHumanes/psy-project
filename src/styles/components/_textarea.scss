@@ -8,6 +8,7 @@
     border: 2px solid $primary-color;
     padding: rem(18px);
     width: 100%;
+    min-height: rem(200px);
     resize: none;
 
     &::placeholder{

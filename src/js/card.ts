@@ -16,7 +16,7 @@ export class Card{
     createTemplateComponent() {
         return `
                     <article class="c-card" js-card>
-                        <textarea name="" id="" cols="30" rows="10" class="c-card__textarea" placeholder="Escribe aquí..."></textarea>
+                        <textarea name="" id="" class="c-card__textarea" placeholder="Escribe aquí..."></textarea>
                     </article>
                 `;
     }
@@ -57,7 +57,10 @@ export class Card{
                 next: (dataObject) => {
                     console.log('next: ', dataObject);
                     if( dataObject[0] >= 20){
-                        dataObject[1].target.closest('[js-slider-card__item]').remove();
+                        dataObject[1].target.closest('[js-slider-card__item]').classList.add('c-slider-card__item--fadeout');
+                        setTimeout(() => {
+                            dataObject[1].target.closest('[js-slider-card__item]').remove();
+                        }, 1000);
                     }
                 },
                 error: (err) => null,
