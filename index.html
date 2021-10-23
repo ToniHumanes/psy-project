@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -36,11 +38,11 @@
 
     <main class="container container--padding">
 
-        <div class="row u-margin-bottom-30px">
+        <section class="row u-margin-bottom-30px">
             <div class="col-12 col-sm-6">
-                <p class="c-paragraph u-margin-bottom-20px">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Curabitur urna mi,
-                    tempus ut urna nec, pharetra molestie risus.</p>
+                <p class="c-paragraph u-margin-bottom-20px">A continuación puedes contarnos como te sientes hoy, si te ha pasado algo bueno, algo malo.</p>
+                <p class="c-paragraph u-margin-bottom-20px">Nosotros te escucharemos y te intentaremos aconsejar lo mejor posible.</p>
+                <p class="c-paragraph u-margin-bottom-20px">Cuando envies el formulario te aparecerán una seríe de consejos que puedes seguir.</p>
             </div>
             <form class="col-12 col-sm-6" action="" id="formEmotion">
                 <div class="u-margin-bottom-10px" js-form-group>
@@ -54,15 +56,20 @@
                 </div>
             </form>
 
-        </div>
+        </section>
 
-        <div class="row u-margin-bottom-50px">
+        <section class="row u-hidden" js-advice="">
+            <p class="c-paragraph u-margin-bottom-20px" js-advice-title=""></p>
+            <p class="c-paragraph u-margin-bottom-30px">estos son los consejos que tengo para ti:</p>
+            <ul class="c-list u-margin-bottom-30px" js-list=""></ul>
+        </section>
+
+        <section class="row u-margin-bottom-50px">
             <div class="col-12">
 
                 <p class="c-subtitle u-margin-bottom-30px">¿Quieres desahogarte?</p>
-                <p class="c-paragraph u-margin-bottom-30px">Tengo unas tarjetas perfectas para ello, puedes escribir en
-                    ellas, a los 20
-                    segundos de que termines de escribir se esfumaran, así que tus secretos están a salvo conmigo.</p>
+                <p class="c-paragraph u-margin-bottom-20px">Tengo unas tarjetas perfectas para ello, puedes escribir en ellas.</p>
+                <p class="c-paragraph u-margin-bottom-30px">A los 20 segundos de que termines de escribir, se esfumaran, así que tus secretos están a salvo conmigo.</p>
 
 
                 <a href="#" class="u-inline-block u-margin-bottom-10px" js-add-card>
@@ -79,7 +86,7 @@
                 </section>
 
             </div>
-        </div>
+        </section>
 
 
     </main>
@@ -102,7 +109,7 @@
         </div>
     </article>
 
-    <article class="c-banner c-banner-bg-red" js-alert="" id="alertErrorServiceSentiment">
+    <article class="c-banner c-banner-bg-red" js-alert="" id="alertErrorService">
         <div class="container">
             <div class="c-banner__layout">
                 <p class="c-paragraph c-paragraph--white">Ha ocurrido un error inesperado</p>

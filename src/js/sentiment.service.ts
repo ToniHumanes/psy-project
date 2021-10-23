@@ -15,7 +15,7 @@ export class SentimentRecognition{
         this.alert = Alert.prototype;
     }
 
-    postDataSentiment(objectData){
+    async postDataSentiment(objectData){
 
         const URL_TRANSLATE_SERVICE = 'https://sentim-api.herokuapp.com/api/v1/';
         const headers = {"Accept": "application/json", "Content-Type": "application/json"}
@@ -34,7 +34,7 @@ export class SentimentRecognition{
 
     controlError(){
         this.loading.close();
-        this.alert.open('alertErrorServiceSentiment');
+        this.alert.open('alertErrorService');
         return of([]);
     }
 

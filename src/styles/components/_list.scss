@@ -1,0 +1,31 @@
+
+
+.c-list{
+    margin: 0;
+    padding-left: rem(32px);
+    list-style: none;
+}
+
+.c-list__item{
+    display: grid;
+    align-items: baseline;
+    grid-template-columns: 8px 1fr;
+    align-items: baseline;
+    grid-column-gap: rem(10px);
+    margin-bottom: rem(10px);
+    font-size: rem($size--xs);
+
+    &:last-of-type{
+        margin-bottom: 0;
+    }
+
+    &::before{
+        content: "";
+        position: relative;
+        top: -3px;
+        width: 8px;
+        height: 8px;
+        background-color: $primary-color;
+        border-radius: 50%;
+    }
+}

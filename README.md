@@ -1,4 +1,8 @@
-# Arquitectura base para proyectos basados en ITCSS y ES8.
+# Aplicación web para consejos psicológicos.
+
+* El proyecto se ha realizado con las siguientes tecnologías:
+
+**HTML5, CSS3, SCSS, VANILLA JAVASCRIPT, RXJS.**
 
 * El proyecto se compila con webpack y se deberán seguir los siguientes pasos para su correcta instalación:
 

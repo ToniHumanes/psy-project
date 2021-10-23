@@ -6,6 +6,8 @@ export class Card{
 
     templateCard: string;
     alert: Alert;
+    secondRemoveCard: number = 20;
+    secondAnimationCard: number = 1000;
 
     constructor(
     ) {
@@ -50,23 +52,27 @@ export class Card{
         focusOutCard$.pipe(
             switchMap( () => interval$ ),
             withLatestFrom(focusOutCard$),
-            takeWhile( arrayData => arrayData[0] < 20, true ),
+            takeWhile( arrayData => arrayData[0] < this.secondRemoveCard, true ),
         )        
         .subscribe( 
             {
                 next: (dataObject) => {
                     console.log('next: ', dataObject);
-                    if( dataObject[0] >= 20){
-                        dataObject[1].target.closest('[js-slider-card__item]').classList.add('c-slider-card__item--fadeout');
-                        setTimeout(() => {
-                            dataObject[1].target.closest('[js-slider-card__item]').remove();
-                        }, 1000);
-                    }
+                    this.removeCardAnimation(dataObject);
                 },
                 error: (err) => null,
                 complete: () => console.log('complete obs$')
             }
         );
+    }
+
+    removeCardAnimation(dataObject){
+        if( dataObject[0] >= 20){
+            dataObject[1].target.closest('[js-slider-card__item]').classList.add('c-slider-card__item--fadeout');
+            setTimeout(() => {
+                dataObject[1].target.closest('[js-slider-card__item]').remove();
+            }, this.secondAnimationCard);
+        }
     }
 
 }

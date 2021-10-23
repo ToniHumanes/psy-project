@@ -1,44 +1,26 @@
 
-
-import { catchError, of, pluck } from "rxjs";
-import { ajax } from "rxjs/ajax";
-
+import translate from "translate";
+import { Alert } from './alert';
+import { Loading } from './loading';
 
 export class Translate {
-    translate$: any;
+
+    loading: Loading;
+    alert: Alert;
+
     constructor() {
-        
+
+        this.loading = Loading.prototype;
+        this.alert = Alert.prototype;
     }
 
-
-    postDataTranslate(){
-        const URL_TRANSLATE_SERVICE = 'https://libretranslate.com/translate';
-        const headers = {"Content-Type": "application/json" }
-        
-        const jsonSend = JSON.stringify({
-            "q": "i am very tired and very angry because you said me this new notice",
-            "source": "en",
-            "target": "es"
+    async postDataTranslate(textTranslate: string){
+        return translate( textTranslate.toString() ,  {from: 'es', to: "en"} )
+        .catch(()=>{
+            this.loading.close();
+            this.alert.open('alertErrorService');
         });
-        
-        this.translate$ = ajax({
-            url: URL_TRANSLATE_SERVICE,
-            method: 'POST',
-            headers,
-            body: jsonSend
-        }).pipe(
-            pluck('response'),
-            catchError( this.controlError )
-        );
-
-        return this.translate$;
     }
-
-    controlError(err){
-        console.log('error', err);
-        return of([]);
-    }
-
 
 }
 

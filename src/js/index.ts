@@ -1,21 +1,17 @@
 
 import '../styles/styles.scss';
 import { from, fromEvent, map, Observable, pluck, takeWhile, tap } from 'rxjs';
-import { exhaustMap } from 'rxjs/operators';
+import { exhaustMap, mergeAll, mergeMap } from 'rxjs/operators';
 import { Modal } from './modal';
 import { Card } from './card';
 import { Alert } from './alert';
 import { Loading } from './loading';
 import { ValidateForm } from './validate-form';
 import { SentimentRecognition } from './sentiment.service';
+import { Translate } from './translate.service';
+import { AdvicesList } from './advices';
+import { sentimentResult } from './sentimentResult.interface';
 
-
-interface sentimentResult {
-    result: {
-        type: string;
-        polarity: number;
-    }
-}
 
 class initApp {
 
@@ -25,10 +21,14 @@ class initApp {
     _loading: Loading;
     validateForm: ValidateForm;
     sentimentService: SentimentRecognition;
-    sendFormClick$: any;
+    translateService: Translate;
+    advices: AdvicesList;
+    sendFormClick$: Observable<MouseEvent>;
 
     constructor(
         sentimentService: SentimentRecognition,
+        translateService: Translate,
+        advices: AdvicesList,
         modal: Modal,
         card: Card,
         alert: Alert,
@@ -41,6 +41,8 @@ class initApp {
         this._loading = loading;
         this.validateForm = validateForm;
         this.sentimentService = sentimentService;
+        this.translateService = translateService;
+        this.advices = advices;
         this.createEventForm();
         this._card.removeCardEvent();
     }
@@ -88,18 +90,16 @@ class initApp {
             valuesFormItem = this.validateForm.getValuesElementsForm(elementsForm);
         }
 
-        return from(valuesFormItem);
+        return from(valuesFormItem)
     }
 
-    sendForm(target: EventTarget) {
-        return this.getValuesForm(target)
+    async sendForm(target: EventTarget) {
+        return (this.getValuesForm(target))
             .pipe(
                 takeWhile((data: Array<NodeList>) => data.length > 0),
-                map<Array<NodeList>, object>((data: Array<NodeList>) => (
-                    { text: data }
-                )),
-                tap(() => Loading.prototype.open()),
-                exhaustMap<object, Observable<any>>((dataObject: object) => this.sentimentService.postDataSentiment(dataObject))
+                map<Array<NodeList>, Promise<Observable<string>>>((data: any) => this.translateService.postDataTranslate(data)),
+                mergeMap<Promise<Observable<string>>, any>((data) => data.then(async dataText => await this.sentimentService.postDataSentiment({ text: dataText })),
+                )
             )
     }
 
@@ -110,14 +110,18 @@ class initApp {
             tap((ev: Event) => ev.preventDefault()),
             pluck('target'),
             takeWhile((target: any) => target.getAttributeNames().includes('js-send-form')),
-            exhaustMap<any, any>((target: any) => this.sendForm(target))
+            exhaustMap<any, any>(async (target: any) => await this.sendForm(target)),
+            mergeAll<any>(),
+            mergeAll<any>()
         )
             .subscribe((dataObject: any) => {
+
                 if (!!dataObject.result) {
                     this._alert.open('alertSuccessServiceSentiment');
                 }
                 console.log('no se que saldrá', dataObject);
                 this.showAdviceInformation(dataObject);
+                this.advices.showViewText(dataObject);
                 this._loading.close();
             });
     }
@@ -129,9 +133,7 @@ class initApp {
         }
     }
 
-    showViewText() {
 
-    }
 
     showAdviceInformation(dataObject: sentimentResult) {
         if (dataObject.result.type === 'negative' && dataObject.result.polarity <= -0.5) {
@@ -148,7 +150,7 @@ class initApp {
 
 // -------- Instance app Module load resourses ----------
 
-const appControlModule = new initApp(new SentimentRecognition, new Modal, new Card, new Alert, new Loading, new ValidateForm);
+const appControlModule = new initApp(new SentimentRecognition, new Translate, new AdvicesList, new Modal, new Card, new Alert, new Loading, new ValidateForm);
 
 ((appControlModule) => {
 
@@ -185,10 +187,3 @@ const appControlModule = new initApp(new SentimentRecognition, new Modal, new Ca
     setEventsListener(arrayMethods);
 
 })(appControlModule);
-
-// tests cases
-
-/**
- * Cambiar la vista y sacar textos dependiendo de "polarity" y "type"
- * Texto: "i am Toni, i am very happy, because have a vr glass"
- */
