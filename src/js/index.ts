@@ -52,9 +52,9 @@ class initApp {
     // "modalExample" is the modal id
 
     openModalExample(e) {
-        e.preventDefault();
         const elementTarget = e.target.attributes['js-open-modal'];
         if (!!elementTarget) {
+            e.preventDefault();
             const attrName = elementTarget.value;
             this._modal.open(attrName);
         }
@@ -67,9 +67,9 @@ class initApp {
     }
 
     addCard(e) {
-        e.preventDefault();
         let targetElement = e.target.closest('a');
         if (!!targetElement && !!targetElement.attributes['js-add-card']) {
+            e.preventDefault();
             this._card.addCard(targetElement);
         }
     }
