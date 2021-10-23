@@ -97,6 +97,7 @@ class initApp {
         return (this.getValuesForm(target))
             .pipe(
                 takeWhile((data: Array<NodeList>) => data.length > 0),
+                tap(() => this._loading.open()),
                 map<Array<NodeList>, Promise<Observable<string>>>((data: any) => this.translateService.postDataTranslate(data)),
                 mergeMap<Promise<Observable<string>>, any>((data) => data.then(async dataText => await this.sentimentService.postDataSentiment({ text: dataText })),
                 )
@@ -119,7 +120,6 @@ class initApp {
                 if (!!dataObject.result) {
                     this._alert.open('alertSuccessServiceSentiment');
                 }
-                console.log('no se que saldrá', dataObject);
                 this.showAdviceInformation(dataObject);
                 this.advices.showViewText(dataObject);
                 this._loading.close();
