@@ -14,6 +14,7 @@ export class AdvicesList {
         this.listElement = document.querySelector('[js-advice]');
         this.adviceElement = document.querySelector('[js-list]');
         this.adviceTitle = document.querySelector('[js-advice-title]');
+        this.advicesTextArray = [];
 
     }
 
@@ -24,7 +25,7 @@ export class AdvicesList {
         // remove all element in to list before of inject news
         this.removeListItems(this.adviceElement);
 
-        if (dataObject.result.type === 'negative') {
+        if (!!dataObject.result && dataObject.result.type === 'negative') {
             typeSentiment = 'negativo, voy a intentar ayudarte';
             this.advicesTextArray  = [
                 "Comienza el día de manera positiva: la forma en que comienzas la mañana suele establecer el tono para el resto del día.",
@@ -35,7 +36,7 @@ export class AdvicesList {
                 "Encuentra el punto de vista optimista en una situación negativa: El objetivo es intentar sacar algo bueno de la situación: convertir la circunstancia en oportunidad.",
                 "Identifica tus pensamientos negativos y transfórmalos: cuando llegue a tu mente algún pensamiento negativo, acéptalo y a partir de ahí observa como podrías transformarlo."
             ];
-        } else if (dataObject.result.type === 'positive') {
+        } else if (!!dataObject.result && dataObject.result.type === 'positive') {
             typeSentiment = 'positivo, eso esta genial!!, de todas formas te voy a ayudar a que sigas así';
             this.advicesTextArray = [
                 "Agradece todo lo que tienes: escribe en un papel 10 cosas que te tengas en tu vida y te hagan feliz y enfócate en todas esas cosas buenas.",
@@ -44,7 +45,7 @@ export class AdvicesList {
                 "¡Sonríe! La gente positiva sonríe mucho, sonríe siempre. Cuando sonríes estás aportando optimismo, estás mostrando buen humor, estás demostrando respeto y estás transmitiendo buenas vibraciones.",
                 "Medita: practicar meditación nos aporta tranquilidad y relajación. Lo que significa que a la hora de pensar esta técnica milenaria puede ayudarte a reflexionar de una forma más positiva, relajada y realista."
             ];
-        } else {
+        } else if (!!dataObject.result && dataObject.result.type === 'neutral'){
             typeSentiment = 'bien, de todas formas te voy a ayudar a que mejores tu estado de ánimo';
             this.advicesTextArray = [
                 "Comprender y conocer nuestras emociones siempre brindará y ayudará a la hora de tener un control sobre los pensamientos.",
@@ -56,8 +57,10 @@ export class AdvicesList {
             ];
         }
 
-        this.adviceTextTitle = `Veo que estas ${typeSentiment}.`;
-        this.adviceTitle.innerText = this.adviceTextTitle;
+        if( !!typeSentiment){
+            this.adviceTextTitle = `Veo que estas ${typeSentiment}.`;
+            this.adviceTitle.innerText = this.adviceTextTitle;
+        }
         
         for (let i = 0; i < this.advicesTextArray.length; i++) {
             const liElement = document.createElement('li');
@@ -67,8 +70,10 @@ export class AdvicesList {
             this.adviceElement.append(liElement);
         }
 
-        this.listElement.classList.remove('u-hidden');
-        this.scrollToList();
+        if( this.advicesTextArray.length > 0){
+            this.listElement.classList.remove('u-hidden');
+            this.scrollToList();
+        }
     }
 
     removeListItems(adviceElement: Element){

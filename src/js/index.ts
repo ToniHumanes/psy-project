@@ -136,7 +136,7 @@ class initApp {
 
 
     showAdviceInformation(dataObject: sentimentResult) {
-        if (dataObject.result.type === 'negative' && dataObject.result.polarity <= -0.5) {
+        if (!!dataObject.result && dataObject.result.type === 'negative' && dataObject.result.polarity <= -0.5) {
             const sentimentNegative = sessionStorage.sentimentNegative;
 
             !!sentimentNegative ? sessionStorage.setItem('sentimentNegative', (Number(sentimentNegative) + 1).toString()) : sessionStorage.setItem('sentimentNegative', '1');

@@ -35,7 +35,7 @@ export class SentimentRecognition{
     controlError(){
         this.loading.close();
         this.alert.open('alertErrorService');
-        return of([]);
+        return of({});
     }
 
 
